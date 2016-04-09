@@ -15,7 +15,7 @@ void swap(int *a, int *b)
 }
 
 
-//bubble sor
+//bubble sort
 //@param a  :integer array to be sorted
 //@param len:length of integer array
 void bubble_sort(int a[], int len)
@@ -28,4 +28,39 @@ void bubble_sort(int a[], int len)
                swap(&a[j], &a[j+1]);			
 		}
 	}
+}
+
+
+//partition for quick sort
+int partition(int a[], int low, int high)
+{
+	while(low < high)
+	{
+		while(low < high && a[low] <= a[high])
+		{
+			--high;
+		}
+		swap(&a[low],&a[high]);
+		while(low < high && a[low] <= a[high])
+		{
+			++low;
+		}
+	    swap(&a[low], &a[high]);
+	}
+	return low;
+}
+
+//quick sort
+//@param int a[]    : integer array to be sorted
+//@param low  : lower index of integer array
+//@param high : higher index of integer array
+void quick_sort(int a[], int low, int high)
+{
+	if(low < high)
+	{
+		int partition_pos = partition(a, low, high);
+		quick_sort(a, low， partition_pos-1);
+		quick_sort(a, partition_pos+1,high);
+	}	
+	
 }
