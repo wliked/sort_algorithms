@@ -102,3 +102,45 @@ void merge_sort(int src[], int dst[], int begin, int end)
         merge(src,dst,begin,mid,end);
     }
 }
+
+//this funcion has a precondition that:  other than value at index pos, values after pos all follow the rule of big end heap
+//heap adjust: to adjust value at index pos, and make the values start from pos follow the rule of big end heap
+//@para int a[]: target integer array
+//@para int pos: position where to start the adjust
+//@para int length: lengh of array a[]
+void heap_adjust(int a[], int pos, int length)
+{ 
+    int child_exchange = 2*pos+1;  // initialize child as default left child
+    while(pos < length && (2*pos+1)< length)  //make sure pos is less than length and has left child
+    {
+         if(2*(pos+1)<length && a[2*(pos+1)]>2*pos+1)
+            ++child_exchange;      //if pos right child exists and is bigger than left child, then right child will be  the node need to exchange with pos                                        
+
+         if(a[child_exchange] > a[pos])
+         {
+            swap(&a[child_exchange],&a[pos]);
+	     pos = child_exchange;  // child_exchange will be the next node need to adjust
+         }
+	  else
+	    break;	 
+    }
+}
+
+//build heap
+void build_heap(int a[], int length)
+{
+    for(int i= (length-1)/2; i >=0; --i)   //initialize i as the first node that is not a leaf node, then --i until 0
+    {
+         heap_adjust(a, i, int length)  
+    }
+}
+
+//heap sort
+void heap_sort(int a[], int length)
+{
+    for (int i = length ; i >1; --i)  // call 
+    {
+        build_heap(a, i);   
+	 swap(&a[0],&a[i-1]);  // swap the value a[0](biggest) and value at end of heap a[i-1] generated in this loop, then a[i-1] will be the biggest value during this loop
+    }
+}
